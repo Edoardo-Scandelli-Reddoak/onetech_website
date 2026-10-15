@@ -39,7 +39,7 @@ async function pushToBackoffice(entry: object) {
       method: "POST",
       headers: { "Content-Type": "application/json", "X-Api-Token": process.env.CONTACTS_API_TOKEN ?? "" },
       body: JSON.stringify(entry),
-      signal: AbortSignal.timeout(4000),
+      signal: AbortSignal.timeout(8000), // room for a cold start of the Django function
     });
     return res.ok;
   } catch {

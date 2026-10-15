@@ -17,6 +17,13 @@ Credenziali di prova (progetto dimostrativo): **username** `admin` · **password
 - **Dashboard contatti:** http://127.0.0.1:8000/ (login richiesto)
 - **Admin Django:** http://127.0.0.1:8000/admin/
 
+## Online (Vercel)
+
+- https://onetech-backoffice.vercel.app (stesse credenziali)
+- Database: Neon Postgres dal Vercel Marketplace, che imposta `DATABASE_URL`. Senza `DATABASE_URL` Django usa SQLite.
+- Variabili su Vercel: `DATABASE_URL`, `CONTACTS_API_TOKEN`, `DJANGO_SECRET_KEY`. Gli stili dell'admin sono serviti da WhiteNoise.
+- Deploy: `vercel deploy --prod` da questa cartella. Migrazioni: `DATABASE_URL=<url diretto> .venv/bin/python manage.py migrate`.
+
 ## Come arrivano i dati
 
 `web` → `POST /api/contact` (Next.js: valida e salva in `web/data/contact-requests.jsonl`)

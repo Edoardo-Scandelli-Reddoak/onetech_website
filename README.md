@@ -2,6 +2,11 @@
 
 Proposta di nuovo sito per [ONE Tech](https://www.otech.one/): un'esperienza che parte dal caos di una giornata di lavoro e lo districa, motore dopo motore.
 
+**Online**
+
+- Sito: https://onetech-website-five.vercel.app
+- Backoffice contatti (Django + Neon Postgres): https://onetech-backoffice.vercel.app — username `admin`, password `onetech-admin`
+
 | Cartella | Cosa contiene |
 |---|---|
 | [`web/`](web) | Sito in **Next.js 16 + React 19 + TypeScript** (CSS Modules, `motion`), con API `/api/contact` |
@@ -42,7 +47,7 @@ Dashboard contatti: http://127.0.0.1:8000/ · Admin Django: http://127.0.0.1:800
 
 1. Il browser valida i campi (stesse regole del server, in `web/src/lib/contact.ts`).
 2. `POST /api/contact` (Next.js) ri-valida, salva in `web/data/contact-requests.jsonl` e inoltra a Django.
-3. Django (`POST /api/contacts/`, protetto da token) salva in SQLite; il team le legge su `http://127.0.0.1:8000/`.
+3. Django (`POST /api/contacts/`, protetto da token) salva nel database: **Neon Postgres** online, SQLite in locale. Il team le legge sulla dashboard del backoffice.
 4. Il browser invia l'email tramite Web3Forms (il piano gratuito accetta solo invii lato client).
 
 Senza chiave Web3Forms o senza Django il modulo funziona comunque: le richieste restano nel file JSONL.

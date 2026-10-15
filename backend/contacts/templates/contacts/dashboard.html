@@ -86,18 +86,13 @@
   <form class="filters" method="get" role="search" aria-label="Filtra le richieste">
     <label class="visually-hidden" for="q" style="position:absolute;left:-9999px">Cerca</label>
     <input id="q" type="search" name="q" value="{{ q }}" placeholder="Cerca per nome, email, azienda o testo…">
-    <label for="topic" style="position:absolute;left:-9999px">Argomento</label>
-    <select id="topic" name="topic">
-      <option value="">Tutti gli argomenti</option>
-      {% for value, label in topics %}<option value="{{ value }}" {% if value == topic %}selected{% endif %}>{{ label }}</option>{% endfor %}
-    </select>
     <label for="status" style="position:absolute;left:-9999px">Stato</label>
     <select id="status" name="status">
       <option value="">Tutti gli stati</option>
       {% for value, label in statuses %}<option value="{{ value }}" {% if value == status %}selected{% endif %}>{{ label }}</option>{% endfor %}
     </select>
     <button class="btn" type="submit">Filtra</button>
-    {% if q or topic or status %}<a class="btn ghost" href="?">Azzera</a>{% endif %}
+    {% if q or status %}<a class="btn ghost" href="?">Azzera</a>{% endif %}
   </form>
 
   {% if contacts %}
@@ -136,7 +131,7 @@
     {% endfor %}
   </div>
   {% else %}
-  <p class="empty">Nessuna richiesta {% if q or topic or status %}con questi filtri{% else %}ancora{% endif %}.</p>
+  <p class="empty">Nessuna richiesta {% if q or status %}con questi filtri{% else %}ancora{% endif %}.</p>
   {% endif %}
 </div>
 </body>
