@@ -1,8 +1,11 @@
 import { appendFile, mkdir } from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import { LIMITS, validateContact, type ContactPayload } from "@/lib/contact";
 
-const DATA_DIR = path.join(process.cwd(), "data");
+// Serverless (Vercel) has a read-only filesystem except the temp dir: there the file is
+// only a best-effort log, the source of truth is the email + the Django backoffice.
+const DATA_DIR = process.env.VERCEL ? path.join(os.tmpdir(), "onetech") : path.join(process.cwd(), "data");
 
 /** Coerce unknown JSON into a payload, trimming and capping every string. */
 function normalise(body: Record<string, unknown>): ContactPayload {
@@ -69,7 +72,8 @@ export async function POST(request: Request) {
   void _ignored;
 
   const entry = { id, receivedAt, ...record };
-  await store(entry);
+  // Storage problems must never block a real person's request.
+  await store(entry).catch((e: unknown) => console.warn("[contact] could not write log file:", e));
   const backoffice = await pushToBackoffice(entry);
   console.info(`[contact] ${receivedAt} ${id} ${data.email} backoffice=${backoffice}`);
 
