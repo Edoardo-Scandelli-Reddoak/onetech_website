@@ -25,9 +25,18 @@ cd backend
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/python manage.py migrate
-.venv/bin/python manage.py createsuperuser
+DJANGO_SUPERUSER_PASSWORD=onetech-admin .venv/bin/python manage.py createsuperuser --noinput --username admin --email admin@example.com
 .venv/bin/python manage.py runserver 127.0.0.1:8000   # http://127.0.0.1:8000
 ```
+
+**Accesso al backoffice** (credenziali di prova, solo per questo progetto dimostrativo):
+
+| | |
+|---|---|
+| Username | `admin` |
+| Password | `onetech-admin` |
+
+Dashboard contatti: http://127.0.0.1:8000/ · Admin Django: http://127.0.0.1:8000/admin/
 
 ## Come viaggia una richiesta di contatto
 

@@ -8,9 +8,11 @@ Riceve le richieste del modulo contatti del sito (`../web`) e le mostra al team.
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
 .venv/bin/python manage.py migrate
-.venv/bin/python manage.py createsuperuser
+DJANGO_SUPERUSER_PASSWORD=onetech-admin .venv/bin/python manage.py createsuperuser --noinput --username admin --email admin@example.com
 .venv/bin/python manage.py runserver 127.0.0.1:8000
 ```
+
+Credenziali di prova (progetto dimostrativo): **username** `admin` · **password** `onetech-admin`.
 
 - **Dashboard contatti:** http://127.0.0.1:8000/ (login richiesto)
 - **Admin Django:** http://127.0.0.1:8000/admin/
