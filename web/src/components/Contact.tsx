@@ -1,6 +1,7 @@
 "use client";
 
 import { CONTACTS, ENGINES } from "@/lib/content";
+import { openCookiePreferences } from "@/lib/consent";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { ContactForm } from "./ContactForm";
 import { Logo } from "./Logo";
@@ -12,8 +13,10 @@ export function Contact() {
 
   return (
     <section id="contatti" className={styles.section} aria-labelledby="contatti-title">
-      <div className={styles.halo} aria-hidden />
-      <div className={`container ${styles.inner}`}>
+      {/* Neon frame: violet light leaking in from every edge, dark at the centre. */}
+      <div className={styles.neon}>
+        <div className={styles.mesh} aria-hidden />
+        <div className={`container ${styles.inner}`}>
         <div className={styles.intro}>
           <h2 id="contatti-title" className={styles.title}>
             {c.titleA}
@@ -53,6 +56,7 @@ export function Contact() {
         </div>
 
         <ContactForm />
+        </div>
       </div>
 
       <footer className={`container ${styles.footer}`}>
@@ -68,6 +72,12 @@ export function Contact() {
           ))}
           <a href="#tailor-lab">Tailor Lab</a>
         </nav>
+        <div className={styles.legal}>
+          <a href="/privacy">{t.cookie.footerPolicy}</a>
+          <button type="button" onClick={openCookiePreferences}>
+            {t.cookie.footerPrefs}
+          </button>
+        </div>
         <p>{c.copy}</p>
       </footer>
     </section>

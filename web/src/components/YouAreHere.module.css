@@ -64,20 +64,24 @@
   color: #fff;
 }
 
+/* Phones: just a compact "next" button in the corner, so it never covers the text. */
 @media (max-width: 560px) {
   .pill {
-    left: 12px;
-    right: 12px;
+    left: 76px;
+    right: auto;
+    bottom: 16px;
     translate: none;
-    justify-content: space-between;
+    padding: 4px;
+    gap: 0;
   }
-  .progress {
+  .progress,
+  .here {
     display: none;
   }
   .next {
     font-size: 13px;
-    padding: 10px 12px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding: 10px 14px;
+    background: var(--violet);
+    color: #fff;
   }
 }

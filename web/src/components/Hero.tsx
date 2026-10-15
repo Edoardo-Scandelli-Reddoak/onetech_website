@@ -5,11 +5,11 @@ import {
   animate,
   motion,
   useMotionValue,
-  useReducedMotion,
   useTransform,
   type MotionStyle,
   type MotionValue,
 } from "motion/react";
+import { useMotionOff } from "@/lib/a11y";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { Thread } from "./hero/Thread";
 import styles from "./Hero.module.css";
@@ -78,7 +78,7 @@ function Fragment({ text, index, progress }: { text: string; index: number; prog
 export function Hero() {
   const { t } = useLanguage();
   const h = t.hero;
-  const reduced = useReducedMotion();
+  const reduced = useMotionOff();
   const p = useMotionValue(0);
 
   // Plays on its own: no scrolling required. Reduced motion jumps straight to the calm end state.
@@ -94,9 +94,6 @@ export function Hero() {
   const hardOpacity = useTransform(p, [0.4, 0.56], [1, 0.22]);
   const answerOpacity = useTransform(p, [0.48, 0.62], [0, 1]);
   const answerY = useTransform(p, [0.48, 0.62], [50, 0]);
-  const bubbleOpacity = useTransform(p, [0.6, 0.72], [0, 1]);
-  const bubbleScale = useTransform(p, [0.6, 0.72], [0.85, 1]);
-  const bubbleY = useTransform(p, [0.6, 0.72], [24, 0]);
   const footOpacity = useTransform(p, [0.68, 0.82], [0, 1]);
   const footY = useTransform(p, [0.68, 0.82], [30, 0]);
   const footEvents = useTransform(p, (v) => (v > 0.72 ? "auto" : "none"));
@@ -115,7 +112,7 @@ export function Hero() {
         </motion.span>
       </h1>
 
-      <Thread progress={p} className={styles.thread} />
+      <Thread progress={p} still={reduced} className={styles.thread} />
 
       {/* Labels sit above the thread so they always stay readable. */}
       <div className={styles.layer} aria-hidden>
@@ -124,15 +121,6 @@ export function Hero() {
         ))}
       </div>
 
-      <motion.figure className={styles.bubble} style={{ opacity: bubbleOpacity, scale: bubbleScale, y: bubbleY }} aria-hidden>
-        <span className={styles.avatar}>G</span>
-        <div>
-          <figcaption>
-            {h.bubble.who} <time>{h.bubble.time}</time>
-          </figcaption>
-          <p>{h.bubble.text}</p>
-        </div>
-      </motion.figure>
 
       <motion.div className={styles.foot} style={{ opacity: footOpacity, y: footY, pointerEvents: footEvents }}>
         <p className={styles.sub}>{h.sub}</p>

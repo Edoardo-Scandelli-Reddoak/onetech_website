@@ -36,7 +36,7 @@ class Command(BaseCommand):
                     "name": row.get("name", ""),
                     "email": row.get("email", ""),
                     "company": row.get("company", ""),
-                    "topic": row.get("topic", "other"),
+                    "topic": row.get("topic", ""),
                     "message": row.get("message", ""),
                     "consent": bool(row.get("consent")),
                     "locale": row.get("locale", "it"),

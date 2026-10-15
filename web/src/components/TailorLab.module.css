@@ -1,46 +1,31 @@
+/* Same palette as the rest of the site, one step deeper into violet so the section stands apart. */
 .section {
   position: relative;
-  background: var(--paper);
-  color: var(--paper-ink);
+  background:
+    radial-gradient(70% 60% at 85% 20%, rgba(111, 77, 255, 0.35), transparent 70%),
+    radial-gradient(50% 50% at 0% 100%, rgba(111, 77, 255, 0.18), transparent 70%),
+    #120d27;
+  color: var(--ink);
   overflow: hidden;
+  isolation: isolate;
 }
 
-.section ::selection {
-  color: #fff;
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(157, 135, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(157, 135, 255, 0.07) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
 }
 
 .inner {
   padding-top: clamp(80px, 10vw, 140px);
   padding-bottom: clamp(80px, 10vw, 140px);
-}
-
-/* Tape measure */
-.tape {
-  height: 46px;
-  background: #e9c74f;
-  border-block: 1px solid rgba(22, 19, 31, 0.25);
-  overflow: hidden;
-}
-
-.tapeTrack {
-  display: flex;
-  width: max-content;
-  height: 100%;
-}
-
-.cm {
-  position: relative;
-  width: 64px;
-  height: 100%;
-  padding: 18px 0 0 4px;
-  font-family: var(--f-mono);
-  font-size: 11px;
-  font-weight: 500;
-  color: #2a2410;
-  background:
-    linear-gradient(90deg, #2a2410 1.5px, transparent 0) 0 0 / 64px 16px no-repeat,
-    linear-gradient(90deg, #2a2410 1px, transparent 0) 0 0 / 6.4px 8px repeat-x,
-    linear-gradient(90deg, #2a2410 1px, transparent 0) 32px 0 / 32px 12px no-repeat;
 }
 
 /* Body */
@@ -56,43 +41,43 @@
   flex-direction: column;
   gap: 20px;
   font-size: 18px;
-  color: #4f495c;
+  color: var(--muted);
 }
 
 .lead {
   font-size: clamp(22px, 2vw, 27px);
   line-height: 1.35;
-  color: var(--paper-ink);
+  color: var(--ink);
   letter-spacing: -0.015em;
 }
 
 .lead strong {
   font-weight: 600;
-  background: linear-gradient(transparent 62%, rgba(111, 77, 255, 0.25) 0);
+  background: linear-gradient(transparent 62%, rgba(111, 77, 255, 0.55) 0);
 }
 
 .btn {
   align-self: flex-start;
   margin-top: 12px;
-  background: var(--paper-ink);
-  color: var(--paper);
+  background: var(--ink);
+  color: var(--bg);
 }
 
 .btn:hover {
   transform: translateY(-2px);
-  background: var(--violet);
-  color: #fff;
+  background: #fff;
 }
 
 .pattern {
   position: relative;
   margin: 0;
   padding: 24px 26px 26px;
-  border-radius: 6px;
-  background: #fbf9f3;
-  border: 1.5px dashed rgba(22, 19, 31, 0.28);
-  box-shadow: 0 30px 60px -40px rgba(22, 19, 31, 0.5);
-  transform: rotate(1.2deg);
+  border-radius: 20px;
+  background: rgba(7, 6, 11, 0.55);
+  border: 1.5px dashed rgba(157, 135, 255, 0.45);
+  box-shadow: 0 30px 80px -30px rgba(111, 77, 255, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   font-family: var(--f-mono);
   font-size: 14px;
 }
@@ -102,13 +87,13 @@
   justify-content: space-between;
   padding-bottom: 14px;
   margin-bottom: 14px;
-  border-bottom: 1px solid rgba(22, 19, 31, 0.12);
+  border-bottom: 1px solid var(--line);
   font-size: 12px;
-  color: #6b6578;
+  color: var(--faint);
 }
 
 .fit {
-  color: var(--violet);
+  color: var(--violet-soft);
 }
 
 .pattern ol {
@@ -118,36 +103,21 @@
   flex-direction: column;
   gap: 10px;
   line-height: 1.5;
-  color: #6b6578;
+  color: var(--faint);
 }
 
 .pattern li::marker {
-  color: #b0aabd;
+  color: var(--faint);
   font-size: 12px;
 }
 
 .fn {
-  color: var(--violet);
+  color: var(--violet-soft);
   font-weight: 500;
 }
 
 .args {
-  color: var(--paper-ink);
-}
-
-.stitch {
-  height: 0;
-  margin: 22px 0 16px;
-  border-top: 2px dashed #e9c74f;
-}
-
-.patternNote {
-  display: flex;
-  gap: 10px;
-  font-family: var(--f-serif);
-  font-style: italic;
-  font-size: 20px;
-  color: var(--paper-ink);
+  color: var(--ink);
 }
 
 @media (max-width: 800px) {
@@ -155,7 +125,6 @@
     grid-template-columns: 1fr;
   }
   .pattern {
-    transform: none;
     font-size: 13px;
   }
   .btn {

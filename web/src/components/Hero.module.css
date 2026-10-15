@@ -136,62 +136,6 @@
   color: #1a0b0b;
 }
 
-/* The human payoff */
-.bubble {
-  position: absolute;
-  left: 66%;
-  top: 20%;
-  margin: 0;
-  display: flex;
-  align-items: flex-end;
-  gap: 12px;
-  max-width: 340px;
-  transform-origin: bottom left;
-}
-
-.avatar {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #f3d55b, #ff9f6b);
-  color: #2a1a10;
-  font-weight: 700;
-  font-size: 18px;
-  box-shadow: 0 0 0 3px var(--bg);
-}
-
-.bubble > div {
-  padding: 14px 18px;
-  border-radius: 20px 20px 20px 6px;
-  background: #fff;
-  color: #16131f;
-  box-shadow: 0 24px 60px -20px rgba(111, 77, 255, 0.6);
-}
-
-.bubble figcaption {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b6578;
-  margin-bottom: 4px;
-}
-
-.bubble time {
-  font-weight: 400;
-}
-
-.bubble p {
-  font-size: 18px;
-  line-height: 1.3;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-}
-
 /* Bottom: one line + CTAs */
 .foot {
   position: absolute;
@@ -234,16 +178,6 @@
   .float {
     font-size: 13px;
     padding: 8px 12px 8px 8px;
-  }
-  .bubble {
-    left: 50%;
-    top: 20%;
-    translate: -50% 0;
-    width: calc(100% - 32px);
-    max-width: 340px;
-  }
-  .bubble p {
-    font-size: 16px;
   }
   .actions .btn {
     width: 100%;

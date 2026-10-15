@@ -111,12 +111,12 @@
         </div>
         <div class="email">{{ c.email }}</div>
         <div class="date">{{ c.received_at|date:"d M Y · H:i" }}</div>
-        <span class="chip">{{ c.get_topic_display }}</span>
+        {% if c.topic %}<span class="chip">{{ c.get_topic_display }}</span>{% else %}<span></span>{% endif %}
         <span class="chip {{ c.status }}">{{ c.get_status_display }}</span>
       </summary>
       <div class="body">
         <div>
-          <p class="msg">{{ c.message }}</p>
+          <p class="msg">{{ c.message|default:"— Nessun messaggio —" }}</p>
           <div class="actions">
             <a class="btn" href="mailto:{{ c.email }}?subject=Re:%20la%20tua%20richiesta%20a%20One%20Tech">Rispondi via email</a>
             <form method="post" action="{% url 'toggle_status' c.pk %}">

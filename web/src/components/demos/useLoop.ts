@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView, useReducedMotion } from "motion/react";
+import { useInView } from "motion/react";
+import { useMotionOff } from "@/lib/a11y";
 
 /**
  * Steps through 0..length-1 on a timer, only while the element is on screen.
@@ -10,7 +11,7 @@ import { useInView, useReducedMotion } from "motion/react";
 export function useLoop<T extends Element>(length: number, interval = 1200) {
   const ref = useRef<T>(null);
   const inView = useInView(ref, { amount: 0.4 });
-  const reduced = useReducedMotion();
+  const reduced = useMotionOff();
   const [step, setStep] = useState(0);
 
   useEffect(() => {

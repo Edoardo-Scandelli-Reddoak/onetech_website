@@ -21,7 +21,6 @@ const EMPTY: Omit<ContactPayload, "locale"> = {
   name: "",
   email: "",
   company: "",
-  topic: "",
   message: "",
   consent: false,
   botcheck: "",
@@ -49,7 +48,7 @@ export function ContactForm() {
     const next = { ...values, [key]: value };
     setValues(next);
     // Once a field has been judged, re-judge it live so the error disappears as soon as it's fixed.
-    if (key !== "company" && key !== "botcheck" && touched[key as ContactField]) {
+    if ((key === "name" || key === "email" || key === "consent") && touched[key as ContactField]) {
       setErrors((e) => ({ ...e, [key]: validateField(key as ContactField, payload(next)) }));
     }
   };
@@ -65,7 +64,7 @@ export function ContactForm() {
 
     const found = validateContact(payload());
     setErrors(found);
-    setTouched({ name: true, email: true, topic: true, message: true, consent: true });
+    setTouched({ name: true, email: true, consent: true });
 
     if (Object.keys(found).length > 0) {
       setShowSummary(true);
@@ -109,11 +108,7 @@ export function ContactForm() {
 
   const errorList = FIELD_ORDER.filter((field) => errors[field]);
   const focusField = (field: ContactField) => {
-    const target =
-      field === "topic"
-        ? document.querySelector<HTMLInputElement>(`input[name="${id("topic")}"]`)
-        : document.getElementById(id(field));
-    target?.focus();
+    document.getElementById(id(field))?.focus();
   };
 
   /** Props shared by every text field: wiring label, hint and error together for screen readers. */
@@ -192,8 +187,6 @@ export function ContactForm() {
               </div>
             )}
 
-            <p className={styles.note}>{f.requiredNote}</p>
-
             <div className={styles.row}>
               <div className={styles.field} data-invalid={!!errors.name}>
                 <label htmlFor={id("name")}>
@@ -247,53 +240,18 @@ export function ContactForm() {
               />
             </div>
 
-            <fieldset
-              className={styles.choices}
-              data-invalid={!!errors.topic}
-              aria-describedby={errors.topic ? id("topic-error") : undefined}
-            >
-              <legend>
-                {f.topic.label} {req}
-              </legend>
-              <div className={styles.choiceGrid}>
-                {f.topic.options.map((o) => (
-                  <label key={o.value} className={styles.choice}>
-                    <input
-                      type="radio"
-                      name={id("topic")}
-                      value={o.value}
-                      checked={values.topic === o.value}
-                      required
-                      onChange={() => {
-                        update("topic", o.value as ContactPayload["topic"]);
-                        setTouched((tch) => ({ ...tch, topic: true }));
-                        setErrors((er) => ({ ...er, topic: undefined }));
-                      }}
-                    />
-                    <span>{o.label}</span>
-                  </label>
-                ))}
-              </div>
-              {err("topic")}
-            </fieldset>
-
-            <div className={styles.field} data-invalid={!!errors.message}>
+            <div className={styles.field}>
               <label htmlFor={id("message")}>
-                {f.message.label} {req}
+                {f.message.label} <span className={styles.opt}>({f.optional})</span>
               </label>
-              <p id={id("message-hint")} className={styles.hint}>
-                {f.message.hint}
-              </p>
               <textarea
-                {...describe("message", true)}
+                id={id("message")}
                 name="message"
                 rows={5}
-                required
                 maxLength={LIMITS.message}
                 value={values.message}
                 onChange={(e) => update("message", e.target.value)}
               />
-              {err("message")}
             </div>
 
             <div className={styles.consent} data-invalid={!!errors.consent}>
@@ -310,7 +268,12 @@ export function ContactForm() {
                 }}
               />
               <label htmlFor={id("consent")}>
-                {f.consent.label} {req}
+                {f.consent.label}
+                <a href="/privacy" target="_blank" rel="noopener" className={styles.inlineLink}>
+                  {f.consent.link}
+                  <span className={styles.srOnly}> {f.consent.newTab}</span> ↗
+                </a>
+                . {req}
               </label>
               {err("consent")}
             </div>

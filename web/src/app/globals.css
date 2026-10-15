@@ -218,3 +218,53 @@ canvas {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Accessibility widget preferences (set as data-a11y-* on <html>) ── */
+
+/* Text size: zoom scales every px-based size consistently. */
+html[data-a11y-text="110"] body {
+  zoom: 1.1;
+}
+html[data-a11y-text="120"] body {
+  zoom: 1.2;
+}
+html[data-a11y-text="130"] body {
+  zoom: 1.3;
+}
+
+html[data-a11y-contrast] {
+  --muted: #e6e2f5;
+  --faint: #c9c4dc;
+  --line: rgba(255, 255, 255, 0.24);
+  --line-strong: rgba(255, 255, 255, 0.5);
+  --violet-soft: #c4b5ff;
+}
+
+html[data-a11y-underline] a {
+  text-decoration: underline !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 4px !important;
+}
+
+html[data-a11y-spacing] body {
+  letter-spacing: 0.04em;
+  word-spacing: 0.14em;
+}
+html[data-a11y-spacing] p,
+html[data-a11y-spacing] li,
+html[data-a11y-spacing] label {
+  line-height: 1.85 !important;
+}
+
+html[data-a11y-motion] *,
+html[data-a11y-motion] *::before,
+html[data-a11y-motion] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* Applied to each top-level block (not <body>) so fixed elements stay fixed. */
+html[data-a11y-grayscale] body > * {
+  filter: grayscale(1);
+}

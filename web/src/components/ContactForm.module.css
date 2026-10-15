@@ -11,11 +11,6 @@
   gap: 22px;
 }
 
-.note {
-  font-size: 14px;
-  color: var(--muted);
-}
-
 .row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -28,8 +23,7 @@
   gap: 8px;
 }
 
-.field label,
-.choices legend {
+.field label {
   font-size: 16px;
   font-weight: 600;
   color: var(--ink);
@@ -38,12 +32,6 @@
 .req,
 .opt {
   font-weight: 400;
-  font-size: 14px;
-  color: var(--muted);
-}
-
-.hint {
-  margin-top: -4px;
   font-size: 14px;
   color: var(--muted);
 }
@@ -139,94 +127,6 @@
   color: #ffb3b3;
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-
-/* Topic choices: big, tappable radio cards */
-.choices {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.choices legend {
-  padding: 0;
-  margin-bottom: 10px;
-}
-
-.choiceGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.choice {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 52px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1.5px solid #3a3550;
-  background: #0b0a11;
-  cursor: pointer;
-  font-size: 16px;
-  transition:
-    border-color 0.2s,
-    background 0.2s;
-}
-
-.choice:hover {
-  border-color: #5a5470;
-}
-
-.choice input {
-  flex: none;
-  appearance: none;
-  width: 22px;
-  height: 22px;
-  margin: 0;
-  border-radius: 50%;
-  border: 2px solid #6c6780;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-}
-
-.choice input::after {
-  content: "";
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #fff;
-  transform: scale(0);
-  transition: transform 0.2s var(--ease);
-}
-
-.choice input:checked {
-  border-color: var(--violet);
-  background: var(--violet);
-}
-
-.choice input:checked::after {
-  transform: scale(1);
-}
-
-.choice:has(input:checked) {
-  border-color: var(--violet);
-  background: rgba(111, 77, 255, 0.14);
-}
-
-.choice:has(input:focus-visible) {
-  box-shadow: 0 0 0 4px rgba(111, 77, 255, 0.35);
-  border-color: var(--violet-soft);
-}
-
-.choices[data-invalid="true"] .choice {
-  border-color: rgba(255, 122, 122, 0.6);
 }
 
 /* Consent */
@@ -385,8 +285,13 @@
 }
 
 @media (max-width: 640px) {
-  .row,
-  .choiceGrid {
+  .row {
     grid-template-columns: 1fr;
   }
+}
+
+.inlineLink {
+  color: var(--violet-soft);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }

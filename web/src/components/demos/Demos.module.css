@@ -253,6 +253,7 @@
 .thread {
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
   gap: 8px;
   padding: 12px;
   border-radius: 14px;
@@ -262,6 +263,7 @@
 }
 
 .threadHead {
+  margin-bottom: auto;
   font-family: var(--f-mono);
   font-size: 11px;
   color: var(--faint);
@@ -340,6 +342,30 @@
 }
 
 @media (max-width: 480px) {
+  .argo {
+    grid-template-columns: 56px 1fr;
+    gap: 12px;
+  }
+  .doc {
+    padding: 10px 8px;
+    gap: 5px;
+  }
+  .docTitle {
+    height: 5px;
+    margin-bottom: 2px;
+  }
+  .docLine {
+    height: 3px;
+  }
+  .fields {
+    gap: 6px;
+  }
+  .fields li {
+    padding: 6px 10px;
+  }
+  .fields strong {
+    font-size: 12.5px;
+  }
   .koreSteps {
     grid-template-columns: repeat(2, 1fr);
   }

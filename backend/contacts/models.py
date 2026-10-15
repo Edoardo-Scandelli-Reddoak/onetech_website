@@ -21,8 +21,8 @@ class ContactRequest(models.Model):
     name = models.CharField("nome e cognome", max_length=120)
     email = models.EmailField("email", max_length=200)
     company = models.CharField("azienda", max_length=120, blank=True)
-    topic = models.CharField("argomento", max_length=20, choices=Topic.choices)
-    message = models.TextField("messaggio", max_length=3000)
+    topic = models.CharField("argomento", max_length=20, choices=Topic.choices, blank=True)  # no longer asked by the form
+    message = models.TextField("messaggio", max_length=3000, blank=True)
     consent = models.BooleanField("consenso privacy", default=False)
     locale = models.CharField("lingua", max_length=2, default="it")
     status = models.CharField("stato", max_length=10, choices=Status.choices, default=Status.NEW)

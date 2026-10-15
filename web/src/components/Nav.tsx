@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { LangToggle } from "./LangToggle";
 import { Logo } from "./Logo";
@@ -32,26 +33,26 @@ export function Nav() {
       </a>
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
         <div className={styles.bar}>
-          <a href="#top" className={styles.brand} aria-label={t.nav.home}>
+          <Link href="/#top" className={styles.brand} aria-label={t.nav.home}>
             <Logo size={26} />
             <span>
               One<span className={styles.brandLight}>Tech</span>
             </span>
-          </a>
+          </Link>
 
           <nav aria-label={t.nav.main} className={styles.links}>
             {t.nav.links.map((item) => (
-              <a key={item.href} href={item.href}>
+              <Link key={item.href} href={item.href}>
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
           <div className={styles.right}>
             <LangToggle />
-            <a href="#contatti" className={`btn btn-primary ${styles.cta}`}>
+            <Link href="/#contatti" className={`btn btn-primary ${styles.cta}`}>
               {t.nav.cta} <span className="arrow">→</span>
-            </a>
+            </Link>
             <button
               className={styles.burger}
               aria-expanded={open}
@@ -70,15 +71,15 @@ export function Nav() {
         <div id="mobile-menu" className={styles.mobile} data-open={open} hidden={!open}>
           <nav aria-label={t.nav.mobile}>
             {t.nav.links.map((item, i) => (
-              <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
+              <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>
                 <span className={styles.mIndex}>0{i + 1}</span>
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
-          <a href="#contatti" className="btn btn-primary" onClick={() => setOpen(false)}>
+          <Link href="/#contatti" className="btn btn-primary" onClick={() => setOpen(false)}>
             {t.nav.cta} <span className="arrow">→</span>
-          </a>
+          </Link>
         </div>
       </header>
     </>

@@ -1,39 +1,17 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion } from "motion/react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { SectionHead } from "./SectionHead";
 import styles from "./TailorLab.module.css";
-
-/** A tailor's tape measure, rendered as ticks + centimetre labels. */
-function Tape({ reverse = false }: { reverse?: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const x = useTransform(scrollYProgress, [0, 1], reverse ? ["-30%", "0%"] : ["0%", "-30%"]);
-  return (
-    <div ref={ref} className={styles.tape} aria-hidden>
-      <motion.div className={styles.tapeTrack} style={{ x }}>
-        {Array.from({ length: 80 }).map((_, i) => (
-          <span key={i} className={styles.cm}>
-            {i + 1}
-          </span>
-        ))}
-      </motion.div>
-    </div>
-  );
-}
 
 export function TailorLab() {
   const { t } = useLanguage();
   const c = t.tailor;
   return (
     <section id="tailor-lab" className={styles.section} aria-labelledby="tailor-title">
-      <Tape />
-
       <div className={`container ${styles.inner}`}>
         <SectionHead
-          tone="light"
           id="tailor-title"
           title={
             <>
@@ -73,15 +51,10 @@ export function TailorLab() {
                 </motion.li>
               ))}
             </ol>
-            <div className={styles.stitch} aria-hidden />
-            <p className={styles.patternNote}>
-              <span>✂</span> {c.note}
-            </p>
           </figure>
         </div>
       </div>
 
-      <Tape reverse />
     </section>
   );
 }

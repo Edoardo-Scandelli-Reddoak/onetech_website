@@ -44,17 +44,12 @@ def _validate(data: dict) -> dict:
     errors = {}
     name = str(data.get("name", "")).strip()
     email = str(data.get("email", "")).strip()
-    message = str(data.get("message", "")).strip()
     if len(name) < 2:
         errors["name"] = "nameShort" if name else "nameRequired"
     if not email:
         errors["email"] = "emailRequired"
     elif not EMAIL_RE.match(email):
         errors["email"] = "emailInvalid"
-    if data.get("topic") not in ContactRequest.Topic.values:
-        errors["topic"] = "topicRequired"
-    if len(message) < 10:
-        errors["message"] = "messageShort" if message else "messageRequired"
     if data.get("consent") is not True:
         errors["consent"] = "consentRequired"
     return errors
@@ -91,8 +86,8 @@ def api_contacts(request: HttpRequest):
             "name": data["name"].strip()[:120],
             "email": data["email"].strip()[:200],
             "company": str(data.get("company", "")).strip()[:120],
-            "topic": data["topic"],
-            "message": data["message"].strip()[:3000],
+            "topic": data.get("topic") if data.get("topic") in ContactRequest.Topic.values else "",
+            "message": str(data.get("message", "")).strip()[:3000],
             "consent": True,
             "locale": "en" if data.get("locale") == "en" else "it",
         },

@@ -40,9 +40,20 @@ Senza chiave Web3Forms o senza Django il modulo funziona comunque: le richieste 
 
 ## Cosa c'è dentro
 
-- **Hero "Lunedì mattina"**: notifiche, file e post-it intrecciati da un filo che, scorrendo, si raddrizza e barra la parola *Difficile?*.
-- **Cosa ti sembra difficile?**: cinque problemi reali in card che scorrono; passando sopra (o toccando) appare la soluzione.
+- **Hero "Lunedì mattina"**: notifiche, file e chat intrecciati da un filo che in 3 secondi si districa da solo e barra la parola *Difficile?*.
+- **Cosa ti sembra difficile?**: cinque problemi reali in card; passando sopra (o toccando) appare la soluzione. Su mobile le card sono una sotto l'altra.
 - **Quattro motori** (KORE, ARGO, ALL MESSAGE, MILO) con mini-demo animate al posto delle icone.
-- **Tailor Lab**, **metodo** e **contatti** con modulo accessibile (etichette esplicite, errori collegati ai campi, riepilogo errori con focus, conferma finale).
+- **Tailor Lab**, **metodo** e **contatti** con cornice neon e modulo accessibile (solo nome, email e consenso obbligatori; errori collegati ai campi, riepilogo errori con focus, conferma finale).
+- **Cookie banner GDPR**: nessuno script di tracciamento prima del consenso, "Rifiuta" identico ad "Accetta", la ✕ vale come rifiuto, preferenze riapribili dal footer, scelta valida 6 mesi, revoca che cancella i cookie. Informativa su `/privacy`.
+- **Widget accessibilità** (in basso a sinistra, su ogni pagina): dimensione del testo, contrasto elevato, link sottolineati, lettura facilitata, stop alle animazioni, scala di grigi. Le scelte restano salvate e vengono applicate prima del primo paint.
+- **WhatsApp** sempre raggiungibile in basso a destra.
 - **IT / EN** in tutto il sito, scelta ricordata tra le visite.
-- Rispetto di `prefers-reduced-motion`: chi riduce le animazioni vede direttamente lo stato finale.
+- **Responsive** verificato da 320 px a 1440 px; rispetto di `prefers-reduced-motion`.
+
+## Variabili d'ambiente (`web/.env.local`)
+
+| Variabile | A cosa serve |
+|---|---|
+| `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` | invio email delle richieste (facoltativa) |
+| `CONTACTS_API_URL`, `CONTACTS_API_TOKEN` | inoltro al backoffice Django (facoltative) |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics, caricato **solo** dopo il consenso (facoltativa) |

@@ -3,14 +3,11 @@
  * so the rules can never drift apart. Errors are keys, translated in the UI.
  */
 
-export const TOPICS = ["demo", "custom", "partnership", "other"] as const;
-export type Topic = (typeof TOPICS)[number];
-
 export type ContactPayload = {
   name: string;
   email: string;
   company: string;
-  topic: Topic | "";
+  /** Optional: a few words about the problem. */
   message: string;
   consent: boolean;
   locale: "it" | "en";
@@ -18,16 +15,13 @@ export type ContactPayload = {
   botcheck?: string;
 };
 
-export type ContactField = "name" | "email" | "topic" | "message" | "consent";
+export type ContactField = "name" | "email" | "consent";
 
 export type ContactErrorKey =
   | "nameRequired"
   | "nameShort"
   | "emailRequired"
   | "emailInvalid"
-  | "topicRequired"
-  | "messageRequired"
-  | "messageShort"
   | "consentRequired";
 
 export type ContactErrors = Partial<Record<ContactField, ContactErrorKey>>;
@@ -51,20 +45,12 @@ export function validateField(field: ContactField, data: ContactPayload): Contac
       if (!EMAIL_RE.test(v) || v.length > LIMITS.email) return "emailInvalid";
       return;
     }
-    case "topic":
-      return TOPICS.includes(data.topic as Topic) ? undefined : "topicRequired";
-    case "message": {
-      const v = data.message.trim();
-      if (!v) return "messageRequired";
-      if (v.length < 10) return "messageShort";
-      return;
-    }
     case "consent":
       return data.consent ? undefined : "consentRequired";
   }
 }
 
-export const FIELD_ORDER: ContactField[] = ["name", "email", "topic", "message", "consent"];
+export const FIELD_ORDER: ContactField[] = ["name", "email", "consent"];
 
 export function validateContact(data: ContactPayload): ContactErrors {
   const errors: ContactErrors = {};

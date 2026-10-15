@@ -1,18 +1,16 @@
 import { appendFile, mkdir } from "node:fs/promises";
 import path from "node:path";
-import { LIMITS, TOPICS, validateContact, type ContactPayload } from "@/lib/contact";
+import { LIMITS, validateContact, type ContactPayload } from "@/lib/contact";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 
 /** Coerce unknown JSON into a payload, trimming and capping every string. */
 function normalise(body: Record<string, unknown>): ContactPayload {
   const str = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
-  const topic = str(body.topic, 20);
   return {
     name: str(body.name, LIMITS.name),
     email: str(body.email, LIMITS.email),
     company: str(body.company, LIMITS.company),
-    topic: (TOPICS as readonly string[]).includes(topic) ? (topic as ContactPayload["topic"]) : "",
     message: str(body.message, LIMITS.message),
     consent: body.consent === true,
     locale: body.locale === "en" ? "en" : "it",
@@ -73,7 +71,7 @@ export async function POST(request: Request) {
   const entry = { id, receivedAt, ...record };
   await store(entry);
   const backoffice = await pushToBackoffice(entry);
-  console.info(`[contact] ${receivedAt} ${id} ${data.email} topic=${data.topic} backoffice=${backoffice}`);
+  console.info(`[contact] ${receivedAt} ${id} ${data.email} backoffice=${backoffice}`);
 
   // The email itself is sent from the browser (see lib/web3forms.ts):
   // Web3Forms' free plan only accepts client-side submissions.

@@ -23,7 +23,9 @@ function knot(t: number, time: number, phase: number) {
  * One thread, two states. `progress` 0 = tangled, 1 = a single straight line.
  * It's pulled from the right end, so it straightens progressively, like real thread.
  */
-export function Thread({ progress, className }: { progress: MotionValue<number>; className?: string }) {
+type Props = { progress: MotionValue<number>; className?: string; /** No continuous animation: redraw only when progress changes. */ still?: boolean };
+
+export function Thread({ progress, className, still = false }: Props) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -96,7 +98,7 @@ export function Thread({ progress, className }: { progress: MotionValue<number>;
       ctx.shadowBlur = 0;
 
       // Once straight, a spark runs along the line: things are flowing now.
-      if (u > 0.98) {
+      if (u > 0.98 && !still) {
         const x = ((time * 0.00022) % 1.2) * w - 0.1 * w;
         const g = ctx.createRadialGradient(x, LINE_Y * h, 0, x, LINE_Y * h, 90);
         g.addColorStop(0, "rgba(255,255,255,0.9)");
@@ -105,12 +107,16 @@ export function Thread({ progress, className }: { progress: MotionValue<number>;
         ctx.fillRect(x - 90, LINE_Y * h - 3, 180, 6);
       }
 
-      if (visible) raf = requestAnimationFrame(draw);
+      if (visible && !still) raf = requestAnimationFrame(draw);
     };
 
     resize();
     raf = requestAnimationFrame(draw);
-    const ro = new ResizeObserver(resize);
+    const unsubscribe = still ? progress.on("change", () => requestAnimationFrame(draw)) : undefined;
+    const ro = new ResizeObserver(() => {
+      resize();
+      if (still) requestAnimationFrame(draw);
+    });
     ro.observe(canvas);
     const io = new IntersectionObserver(([e]) => {
       visible = e.isIntersecting;
@@ -121,10 +127,11 @@ export function Thread({ progress, className }: { progress: MotionValue<number>;
 
     return () => {
       cancelAnimationFrame(raf);
+      unsubscribe?.();
       ro.disconnect();
       io.disconnect();
     };
-  }, [progress]);
+  }, [progress, still]);
 
   return <canvas ref={ref} className={className} aria-hidden />;
 }

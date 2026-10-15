@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
 import { ENGINES } from "@/lib/content";
+import { useMotionOff } from "@/lib/a11y";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import type { Problem } from "@/lib/i18n/dictionaries";
 import { ProblemIcon } from "./ProblemIcon";
@@ -78,7 +79,10 @@ export function ProblemPicker() {
   const { t } = useLanguage();
   const c = t.problems;
   const [openId, setOpenId] = useState<string | null>(null);
-  const [desktop, setDesktop] = useState(false);
+  const motionOff = useMotionOff();
+  const [wide, setWide] = useState(false);
+  // Sideways pinned scrolling only on wide screens and when motion is welcome.
+  const desktop = wide && !motionOff;
   const [travel, setTravel] = useState(0);
   const [progress, setProgress] = useState(0);
   const pinRef = useRef<HTMLDivElement>(null);
@@ -86,9 +90,9 @@ export function ProblemPicker() {
 
   // Desktop: vertical scroll drives the row sideways. Mobile: native swipe.
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 901px) and (prefers-reduced-motion: no-preference)");
+    const mq = window.matchMedia("(min-width: 901px)");
     const measure = () => {
-      setDesktop(mq.matches);
+      setWide(mq.matches);
       const t = trackRef.current;
       if (t) setTravel(Math.max(0, t.scrollWidth - t.clientWidth));
     };
@@ -126,22 +130,22 @@ export function ProblemPicker() {
 
   return (
     <section id="difficile" className={styles.section} aria-labelledby="difficile-title">
-      <div className="container">
-        <SectionHead
-          id="difficile-title"
-          title={
-            <>
-              {c.title[0]}
-              <em>{c.title[1]}</em>
-              {c.title[2]}
-            </>
-          }
-          intro={c.intro}
-        />
-      </div>
-
       <div ref={pinRef} className={styles.pin} style={desktop ? { height: `calc(100svh + ${travel}px)` } : undefined}>
         <div className={styles.sticky}>
+          <div className={`container ${styles.head}`}>
+            <SectionHead
+              id="difficile-title"
+              title={
+                <>
+                  {c.title[0]}
+                  <em>{c.title[1]}</em>
+                  {c.title[2]}
+                </>
+              }
+              intro={c.intro}
+            />
+          </div>
+
           <div className={styles.viewport}>
             <motion.div
               ref={trackRef}

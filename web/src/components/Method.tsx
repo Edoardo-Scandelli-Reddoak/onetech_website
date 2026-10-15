@@ -18,6 +18,7 @@ export function Method() {
           title={
             <>
               {c.title[0]}
+              <br />
               <em>{c.title[1]}</em>
             </>
           }
