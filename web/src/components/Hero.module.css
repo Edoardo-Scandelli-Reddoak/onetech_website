@@ -1,17 +1,8 @@
-/* Pinned for ~2 screens of scroll: that's the time it takes to untangle the knot. */
+/* Full screen; the untangling plays on its own in ~3 seconds. */
 .hero {
   position: relative;
-  height: 290vh;
-}
-
-.hero[data-reduced="true"] {
   height: 100svh;
-}
-
-.stage {
-  position: sticky;
-  top: 0;
-  height: 100svh;
+  min-height: 600px;
   overflow: hidden;
   isolation: isolate;
 }
@@ -80,6 +71,7 @@
 .fragment {
   position: absolute;
   left: var(--x);
+  top: var(--y);
   translate: -50% -50%;
   max-width: min(46vw, 300px);
 }
@@ -87,22 +79,29 @@
 .float {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid var(--line-strong);
-  background: rgba(19, 17, 29, 0.92);
+  gap: 10px;
+  padding: 10px 16px 10px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #17151f;
   box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9);
-  font-size: 14px;
+  font-size: 15px;
+  font-weight: 500;
   line-height: 1.3;
-  color: var(--muted);
+  color: #ece9f7;
   white-space: nowrap;
   animation: drift 7s ease-in-out infinite alternate;
 }
 
-.float i {
-  font-style: normal;
+.icon {
   flex: none;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #c9c4dc;
 }
 
 @keyframes drift {
@@ -117,49 +116,24 @@
   }
 }
 
-.fragment[data-kind="file"] .float {
-  font-family: var(--f-mono);
-  font-size: 12.5px;
+.fragment[data-kind="chat"] .icon {
+  background: rgba(37, 211, 102, 0.16);
+  color: #4be08a;
 }
 
-.fragment[data-kind="chat"] .float {
-  border-radius: 18px 18px 18px 4px;
-  background: #1b1828;
-  color: var(--ink);
-}
-
-.fragment[data-kind="note"] .float {
-  border: 0;
-  border-radius: 3px;
-  background: #f3d55b;
-  color: #2a2410;
-  font-family: var(--f-serif);
-  font-style: italic;
-  font-size: 19px;
-  white-space: normal;
-  max-width: 190px;
-  padding: 16px 16px 20px;
-}
-
-.fragment[data-kind="alert"] .float i {
-  display: grid;
-  place-items: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ff6b6b;
-  color: #1a0b0b;
-  font-size: 12px;
-  font-weight: 700;
+.fragment[data-kind="mail"] .icon {
+  background: rgba(96, 165, 250, 0.16);
+  color: #8ec0ff;
 }
 
 .fragment[data-kind="alert"] .float {
-  border-color: rgba(255, 107, 107, 0.35);
-  color: #ffd0d0;
+  border-color: rgba(255, 107, 107, 0.4);
 }
 
-.fragment[data-kind="call"] .float i {
-  color: #ff6b6b;
+.fragment[data-kind="alert"] .icon,
+.fragment[data-kind="call"] .icon {
+  background: #ff6b6b;
+  color: #1a0b0b;
 }
 
 /* The human payoff */
@@ -244,80 +218,22 @@
   gap: 12px;
 }
 
-.hint {
-  position: absolute;
-  left: 50%;
-  bottom: 28px;
-  translate: -50% 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 18px 10px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: rgba(15, 13, 23, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  font-size: 14px;
-  font-weight: 500;
-  white-space: nowrap;
-  z-index: 5;
-}
-
-.mouse {
-  position: relative;
-  width: 20px;
-  height: 30px;
-  border-radius: 10px;
-  border: 2px solid var(--muted);
-}
-
-.mouse i {
-  position: absolute;
-  left: 50%;
-  top: 5px;
-  width: 3px;
-  height: 6px;
-  margin-left: -1.5px;
-  border-radius: 2px;
-  background: var(--violet-soft);
-  animation: wheel 1.6s ease-in-out infinite;
-}
-
-@keyframes wheel {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(10px);
-    opacity: 0;
-  }
-}
-
-.hero[data-reduced="true"] .hint,
-.hero[data-reduced="true"] .layer {
-  display: none;
-}
-
 @media (max-width: 760px) {
   .fragment[data-mobile="false"] {
     display: none;
   }
   .fragment {
-    left: clamp(26%, var(--x), 74%);
-    max-width: 50vw;
+    left: clamp(30%, var(--x), 70%);
+    top: var(--my);
+    width: max-content;
+    max-width: 58vw;
   }
   .float {
     white-space: normal;
   }
   .float {
-    font-size: 12px;
-    padding: 8px 11px;
-  }
-  .fragment[data-kind="note"] .float {
-    font-size: 16px;
-    max-width: 150px;
+    font-size: 13px;
+    padding: 8px 12px 8px 8px;
   }
   .bubble {
     left: 50%;
