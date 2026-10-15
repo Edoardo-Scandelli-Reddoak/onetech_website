@@ -1,0 +1,121 @@
+.section {
+  padding: clamp(96px, 12vw, 160px) 0;
+}
+
+.race {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: clamp(24px, 3.5vw, 44px);
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+}
+
+.laneLabel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.laneLabel span {
+  font-family: var(--f-mono);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.track {
+  height: 56px;
+  border-radius: 14px;
+  background:
+    repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px calc(100% / 12)),
+    rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 18px;
+  font-family: var(--f-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.slow {
+  background: repeating-linear-gradient(-45deg, #2a2735 0 10px, #23202d 10px 20px);
+  color: var(--muted);
+}
+
+.fast {
+  background: linear-gradient(90deg, var(--violet), var(--violet-soft));
+  color: #fff;
+  box-shadow: 0 0 40px -6px var(--violet-glow);
+}
+
+.steps {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.steps li {
+  padding: 28px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+}
+
+.stepNum {
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--violet-soft);
+}
+
+.steps h3 {
+  margin: 40px 0 12px;
+  font-size: 26px;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.steps p {
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .steps {
+    grid-template-columns: 1fr;
+  }
+  .steps h3 {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fast span {
+    font-size: 11px;
+  }
+  .bar {
+    padding: 0 10px;
+  }
+}

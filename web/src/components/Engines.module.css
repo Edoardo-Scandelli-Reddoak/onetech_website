@@ -1,0 +1,139 @@
+.section {
+  padding: clamp(96px, 12vw, 160px) 0;
+  border-top: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-raised) 100%);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.card {
+  --mx: 50%;
+  --my: 0%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 2.6vw, 34px);
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  overflow: hidden;
+  isolation: isolate;
+  scroll-margin-top: 100px;
+  transition: border-color 0.3s;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(111, 77, 255, 0.16), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.card:hover {
+  border-color: rgba(111, 77, 255, 0.4);
+}
+
+.card:hover::before,
+.card:target::before {
+  opacity: 1;
+}
+
+.card:target {
+  border-color: var(--violet);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.num {
+  color: var(--faint);
+}
+
+.domain {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+}
+
+.demo {
+  height: 250px;
+  margin: 24px 0 28px;
+  padding: 18px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0) 0 0 / 16px 16px,
+    rgba(0, 0, 0, 0.25);
+}
+
+.name {
+  font-size: clamp(34px, 3.6vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.tagline {
+  margin-top: 10px;
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: clamp(22px, 2vw, 28px);
+  line-height: 1.15;
+  color: var(--violet-soft);
+}
+
+.desc {
+  margin-top: 16px;
+  max-width: 48ch;
+  color: var(--muted);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 26px;
+  font-weight: 600;
+}
+
+.link .arrow {
+  transition: transform 0.3s var(--ease);
+}
+
+.link:hover {
+  color: var(--violet-soft);
+}
+
+.link:hover .arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .demo {
+    height: 280px;
+    padding: 14px;
+  }
+}

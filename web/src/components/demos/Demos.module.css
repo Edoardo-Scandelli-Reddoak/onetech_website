@@ -1,0 +1,361 @@
+/* Shared: every demo lives in a ~240px tall stage. */
+.kore,
+.argo,
+.allm,
+.milo {
+  height: 100%;
+  font-size: 13px;
+}
+
+/* KORE */
+.kore {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.koreHead {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.koreHead strong {
+  font-family: var(--f-sans);
+  white-space: nowrap;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.koreSteps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.koreSteps li {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  color: var(--faint);
+  transition: all 0.4s var(--ease);
+}
+
+.koreSteps li[data-state="done"] {
+  color: var(--muted);
+}
+
+.koreSteps li[data-state="now"] {
+  border-color: var(--violet);
+  background: rgba(111, 77, 255, 0.12);
+  color: var(--ink);
+}
+
+.koreDot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  font-family: var(--f-mono);
+  font-size: 11px;
+}
+
+[data-state="done"] .koreDot {
+  background: rgba(61, 220, 151, 0.14);
+  border-color: transparent;
+  color: var(--ok);
+}
+
+[data-state="now"] .koreDot {
+  background: var(--violet);
+  border-color: var(--violet);
+  color: #fff;
+}
+
+.koreBar {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.koreBar span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--violet), var(--violet-soft));
+}
+
+/* ARGO */
+.argo {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.doc {
+  position: relative;
+  aspect-ratio: 0.75;
+  max-height: 210px;
+  padding: 18px 16px;
+  border-radius: 8px;
+  background: #ece9f5;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  overflow: hidden;
+  transform: rotate(-3deg);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+}
+
+.docTitle {
+  width: 50%;
+  height: 8px;
+  border-radius: 3px;
+  background: #6f4dff;
+  margin-bottom: 6px;
+}
+
+.docLine {
+  height: 5px;
+  border-radius: 3px;
+  background: #c9c4d9;
+}
+
+.scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36px;
+  top: -36px;
+  background: linear-gradient(180deg, transparent, rgba(111, 77, 255, 0.35), transparent);
+  border-bottom: 2px solid var(--violet);
+  animation: scan 2.6s var(--ease) infinite;
+}
+
+@keyframes scan {
+  to {
+    top: 100%;
+  }
+}
+
+.fields {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fields li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  opacity: 0.15;
+  transform: translateX(-10px);
+  transition:
+    opacity 0.45s var(--ease),
+    transform 0.45s var(--ease),
+    border-color 0.45s;
+}
+
+.fields li[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+  border-color: rgba(111, 77, 255, 0.4);
+}
+
+.fields span {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.fields strong {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ALL MESSAGE */
+.allm {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 14px;
+  align-items: stretch;
+}
+
+.channels {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.channels li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--muted);
+  transition: all 0.35s var(--ease);
+}
+
+.channels li span,
+.bubble span {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--c);
+  color: #fff;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.channels li[data-active="true"] {
+  border-color: var(--c);
+  color: var(--ink);
+  transform: translateX(6px);
+}
+
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.threadHead {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--faint);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+.bubble {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px 7px 7px;
+  border-radius: 12px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  align-self: flex-start;
+}
+
+/* MILO */
+.milo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.msg[data-from="user"] {
+  align-self: flex-end;
+  background: var(--violet);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.msg[data-from="milo"] {
+  align-self: flex-start;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-bottom-left-radius: 4px;
+}
+
+.typing {
+  display: flex;
+  gap: 4px;
+  padding: 14px 16px;
+}
+
+.typing i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+  animation: dot 1s infinite;
+}
+
+.typing i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.typing i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes dot {
+  50% {
+    opacity: 0.25;
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 480px) {
+  .koreSteps {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .allm {
+    grid-template-columns: 1fr;
+  }
+  .channels {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .channels li {
+    font-size: 0;
+    gap: 0;
+    padding: 4px;
+  }
+  .channels li[data-active="true"] {
+    transform: translateY(-3px);
+  }
+}

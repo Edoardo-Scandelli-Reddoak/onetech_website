@@ -1,0 +1,4 @@
+# Brief del test: documento riservato, non va pubblicato
+*.pdf
+
+.DS_Store
